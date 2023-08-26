@@ -43,15 +43,9 @@ func main() {
         logger: logger,
     }
 
-    // Declare a new servemux and add /v1/healthcheck route
-    // this route dispatched the healthCheckHandler method
-
-    mux := http.NewServeMux()
-    mux.HandleFunc("/v1/healthCheck", app.healthCheckHander)
-
     srv := &http.Server{
         Addr: fmt.Sprintf(":%d", cfg.port),
-        Handler: mux,
+        Handler: app.routes(),
         IdleTimeout: time.Minute,
         ReadTimeout: 5 * time.Second,
         WriteTimeout: 10 * time.Second,
